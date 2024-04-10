@@ -5,6 +5,7 @@ const app = express();
 import globalErrorHandler from "./middlewares/globalErrorHandler";
 import userRouter from "./users/userRouter";
 
+app.use(express.json());
 //Routes
 
 app.get("/", (req, res, next) => {
