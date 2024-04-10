@@ -3,6 +3,7 @@ import createHttpError, { HttpError } from "http-errors";
 import { config } from "./config/config";
 const app = express();
 import globalErrorHandler from "./middlewares/globalErrorHandler";
+import userRouter from "./users/userRouter";
 
 //Routes
 
@@ -12,6 +13,8 @@ app.get("/", (req, res, next) => {
   throw error;
   res.json({ message: "this is your message" });
 });
+
+app.use("/api/users", userRouter);
 
 //global error handlers
 app.use(globalErrorHandler);
