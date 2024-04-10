@@ -4,4 +4,4 @@
 4-git init -->to initialize git
 5-press cntrl+shift+p->search for .git and press on add gitignore then search for node and press enter and by doing this you will add gitignore files in your root directory
 
-6-setup eslint (use this in every project)
+6-setup eslint (use this in every project) install by -->npm init @eslint/config
