@@ -1,0 +1,5 @@
+1-To initialise node project do->npm init
+2-npm install -D typescript ts-node nodemon @types/node
+3-npx tsc --init  (this is to run typescript i.e doing its configuration)
+4-git init -->to initialize git
+5-press cntrl+shift+p->search for .git and press on add gitignore then search for node and press enter and by doing this you will add gitignore files in your root directory
