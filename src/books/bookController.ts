@@ -139,4 +139,14 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
   res.json(updateBook);
 };
 
-export { createBook, updateBook };
+const listBooks = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    //to do-add pagination
+    const book = await bookModel.find();
+    res.json(book);
+  } catch (err) {
+    return next(createHttpError(500, "Error while fetching books"));
+  }
+};
+
+export { createBook, updateBook, listBooks };
