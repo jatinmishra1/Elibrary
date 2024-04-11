@@ -148,5 +148,20 @@ const listBooks = async (req: Request, res: Response, next: NextFunction) => {
     return next(createHttpError(500, "Error while fetching books"));
   }
 };
-
-export { createBook, updateBook, listBooks };
+const getSingleBook = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const bookId = req.params.bookId;
+  try {
+    const book = await bookModel.findOne({ _id: bookId });
+    if (!book) {
+      return next(createHttpError(500, "Error while fetching book"));
+    }
+    return res.json(book);
+  } catch (err) {
+    return next(createHttpError(500, "Error while fetching book"));
+  }
+};
+export { createBook, updateBook, listBooks, getSingleBook };
