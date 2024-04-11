@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response, raw } from "express";
 import cloudinary from "../config/cloudinary";
 import path from "path";
+import fs from "fs";
 import createHttpError from "http-errors";
+import bookModel from "./bookModel";
 const createBook = async (req: Request, res: Response, next: NextFunction) => {
   //   console.log("files", req.files);
   const files = req.files as { [filename: string]: Express.Multer.File[] };
@@ -34,15 +36,37 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
         format: "pdf",
       }
     );
-    console.log(bookFileUploadResult);
-
+    // console.log(bookFileUploadResult);
     // console.log(uploadResult);
+    let newBook;
+    try {
+      const { title, genre } = req.body;
+      newBook = await bookModel.create({
+        title,
+        genre,
+        author: "66170cfa34d7d55c6627374c",
+        coverImage: uploadResult.secure_url,
+        file: bookFileUploadResult.secure_url,
+      });
+    } catch (err) {
+      console.log(err);
+      return next(createHttpError(500, "book creation failed"));
+    }
+
+    //deleting temperory files which got uploaded on derver i.e in our public folder
+    try {
+      await fs.promises.unlink(filePath);
+      await fs.promises.unlink(bookFilePath);
+    } catch (err) {
+      console.log(err);
+      return next(createHttpError(404, "temp file deletion failed"));
+    }
+
+    res.status(201).json({ id: newBook._id });
   } catch (err) {
     console.log(err);
     return next(createHttpError(500, "error while uploading image and file"));
   }
-
-  res.json({});
 };
 
 export { createBook };
