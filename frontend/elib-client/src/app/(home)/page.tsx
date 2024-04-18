@@ -15,8 +15,10 @@ export default async function Home() {
   return (
     <>
       <Banner />
+
       <Suspense fallback={<Loading />}>
         <BookList />
+        {/* <sadcomponent/> */}
       </Suspense>
     </>
   );
